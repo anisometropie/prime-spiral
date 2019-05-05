@@ -16,3 +16,11 @@ export const isPrime = n => {
 
   return true;
 };
+
+export const nextOddPerfectSquare = n => {
+  const next = Math.ceil(Math.sqrt(n)) ** 2;
+  if (next % 2 === 0) {
+    return nextOddPerfectSquare(next + 1);
+  }
+  return next;
+};
