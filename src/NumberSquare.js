@@ -30,20 +30,39 @@ const getCoords = (n, origin, squareSize) => {
   }
 };
 
-const NumberSquare = ({ n, origin, isPrime, size }) => {
-  const { x, y } = getCoords(n, origin, size);
-  return (
-    <div
-      style={{
-        left: x,
-        top: y,
-        width: `${size}px`,
-        height: `${size}px`,
-        background: isPrime ? "lightgreen" : ""
-      }}
-      className="numberSquare"
-    />
-  );
-};
+class NumberSquare extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mouseOver: false
+    };
+  }
+
+  render() {
+    const { n, origin, isPrime, size } = this.props;
+    const { mouseOver } = this.state;
+    const { x, y } = getCoords(n, origin, size);
+    return (
+      <rect
+        x={mouseOver ? x - size : x}
+        y={mouseOver ? y - size : y}
+        width={mouseOver ? size * 3 : size}
+        height={mouseOver ? size * 3 : size}
+        style={{
+          fill: isPrime ? "lightgreen" : "white",
+          stroke: "lightgrey",
+          strokeWidth: 0.25
+        }}
+        className="numberSquare"
+        onMouseEnter={() => {
+          this.setState({ mouseOver: true });
+        }}
+        onMouseLeave={() => {
+          this.setState({ mouseOver: false });
+        }}
+      />
+    );
+  }
+}
 
 export default NumberSquare;

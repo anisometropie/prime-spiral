@@ -3,7 +3,7 @@ import NumberSquare from "./NumberSquare";
 import { isPrime, nextPerfectSquare } from "./math";
 import "./style.css";
 
-let SIZE = 10000;
+let SIZE = 30000;
 
 const origin = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
@@ -29,7 +29,7 @@ class App extends React.Component {
         size={5}
       />
     ));
-    return <div className="App">{numberSquares}</div>;
+    return <svg className="App">{numberSquares}</svg>;
   }
 }
 
