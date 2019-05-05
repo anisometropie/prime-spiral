@@ -3,15 +3,15 @@ import { nextOddPerfectSquare } from "./math";
 import "./style.css";
 import { clone } from "lodash";
 
-const toPixelCoords = (x, y, origin) => {
-  return { x: x * 16 + origin.x, y: y * 16 + origin.y };
+const toPixelCoords = (x, y, origin, size) => {
+  return { x: x * size + origin.x, y: y * size + origin.y };
 };
 
 const moves = ["x -=", "y +=", "x +=", "y -="];
 
-const getCoords = (n, origin) => {
+const getCoords = (n, origin, squareSize) => {
   if (n === 1) {
-    return toPixelCoords(0, 0, origin);
+    return toPixelCoords(0, 0, origin, squareSize);
   } else {
     const nextSquare = nextOddPerfectSquare(n);
     const size = Math.sqrt(nextSquare);
@@ -26,19 +26,23 @@ const getCoords = (n, origin) => {
       eval(`thisPosition.${moves[i]} ${size - 1}`);
     }
     eval(`thisPosition.${moves[i]} ${remainderSteps}`);
-    return toPixelCoords(thisPosition.x, thisPosition.y, origin);
+    return toPixelCoords(thisPosition.x, thisPosition.y, origin, squareSize);
   }
 };
 
-const NumberSquare = ({ n, origin, isPrime }) => {
-  const { x, y } = getCoords(n, origin);
+const NumberSquare = ({ n, origin, isPrime, size }) => {
+  const { x, y } = getCoords(n, origin, size);
   return (
     <div
-      style={{ left: x, top: y, background: isPrime ? "lightgreen" : "" }}
+      style={{
+        left: x,
+        top: y,
+        width: `${size}px`,
+        height: `${size}px`,
+        background: isPrime ? "lightgreen" : ""
+      }}
       className="numberSquare"
-    >
-      {n}
-    </div>
+    />
   );
 };
 
